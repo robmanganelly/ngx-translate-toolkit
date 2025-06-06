@@ -1,63 +1,14 @@
-# NgxTranslateToolkit
+# NGX Translate Toolkit
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.0.
+## Overview
 
-## Code scaffolding
+The NGX Translate Toolkit is an angular library designed to streamline the process of managing translations in projects involving several Angular applications and libraries. It provides a set of tools and utilities to help developers easily integrate and maintain translations, making it simpler to create multilingual applications.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+> Even though the toolkit can work with any Angular project, it is particularly beneficial for large-scale applications or monorepos where multiple Angular applications and libraries share common translation files, especially on micro-frontends.
 
-```bash
-ng generate component component-name
-```
+This library aims to extend the capabilities of `@ngx-translate/core` library by providing additional features and utilities that enhance the translation experience in Angular projects. **It is not meant to replace it** You will still need to install `@ngx-translate/core` in your project to use this toolkit.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Installation
 
-```bash
-ng generate --help
-```
+Depending on your package manager, you can install the NGX Translate Toolkit using one of the following commands:
 
-## Building
-
-To build the library, run:
-
-```bash
-ng build ngx-translate-toolkit
-```
-
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
-
-### Publishing the Library
-
-Once the project is built, you can publish your library by following these steps:
-
-1. Navigate to the `dist` directory:
-   ```bash
-   cd dist/ngx-translate-toolkit
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

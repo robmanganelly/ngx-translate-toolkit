@@ -1,5 +1,6 @@
-/*
- * Public API Surface of ngx-translate-toolkit
- */
-
-export * from './lib/ngx-translate-toolkit';
+export {
+  withTranslationSource,
+  type TranslationSourceLocator,
+} from './lib/features';
+export * from './lib/provide-loader';
+export * from './lib/translation-key.factory';

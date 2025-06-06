@@ -23,32 +23,18 @@ import {
 } from '@angular/common/http';
 import { isDevMode, Type } from '@angular/core';
 
-type Fetch = NonNullable<Document['defaultView']>['fetch'];
-type Handle = InstanceType<typeof HttpBackend>['handle'];
-
-const fallback: Fetch = () =>
+const fallback = () =>
   Promise.reject('fetch not available, is this server side ?');
 
-const noHandle = () =>
-  throwError(() => ({
-    statusText: 'HttpBackend not defined. Are providers missing?',
-  }));
 
 export class MultiLoader implements TranslateLoader {
-  #fetch: Fetch;
-  #handle: Handle;
   #isHttp: boolean;
 
-  constructor(_api: Document | HttpBackend, private _sources: string[]) {
-    if (_api instanceof HttpBackend) {
-      this.#isHttp = false;
-      this.#fetch = fallback;
-      this.#handle = _api.handle ?? noHandle;
-    } else {
-      this.#isHttp = true;
-      this.#fetch = _api.defaultView?.fetch ?? fallback;
-      this.#handle = noHandle;
-    }
+  constructor(
+    private _api: Document | HttpBackend,
+    private _sources: string[]
+  ) {
+    this.#isHttp = _api instanceof HttpBackend;
   }
 
   #buildUrl(source: string, lang: string) {
@@ -56,11 +42,16 @@ export class MultiLoader implements TranslateLoader {
   }
 
   async #get(urls: string[]): Promise<TranslationObject> {
+
+    if (!this.#isHttp) {
+      throw new Error('MultiLoader must be used with HttpBackend');
+    }
+
     // TODO optimize for httpBackend <Observable API>
     const translations = await Promise.all(
       urls.map((url) =>
         firstValueFrom(
-          this.#handle(new HttpRequest('GET', url)).pipe(
+          (this._api as HttpBackend).handle(new HttpRequest('GET', url)).pipe(
             filter((e) => e instanceof HttpResponse),
             map((r) => r.body),
             catchError((r: HttpErrorResponse) => {
@@ -78,7 +69,7 @@ export class MultiLoader implements TranslateLoader {
   }
 
   async #fetchData(urls: string[]): Promise<TranslationObject> {
-    const responses = await Promise.all(urls.map((u) => this.#fetch(u)));
+    const responses = await Promise.all(urls.map((u) => ((this._api as Document).defaultView?.fetch ?? fallback)(u)));
     // log errors if any
     responses.forEach((r) => {
       if (!r.ok)

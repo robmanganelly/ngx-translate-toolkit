@@ -15,8 +15,9 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
+      - run: bun add -d @angular/cli
       - run: bun install
-      - run: bun test
+      - run: bun ng test
 
   publish-npm:
     needs: build

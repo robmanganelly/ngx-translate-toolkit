@@ -36,6 +36,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
+          path: build
+      - name: Install tree
+        run: sudo apt-get update && sudo apt-get install -y tree
+      - name: Show artifact contents
+        run: tree -C -a -f -L 5
       - uses: actions/setup-node@v4
         with:
           node-version: 22

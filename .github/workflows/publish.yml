@@ -21,12 +21,21 @@ jobs:
       - run: bun ng build --configuration production ngx-translate-toolkit
         env:
           CI: true # to avoid interactive prompts during build
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: dist/ngx-translate-toolkit
 
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
       - uses: actions/setup-node@v4
         with:
           node-version: 22

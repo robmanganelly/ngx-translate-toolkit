@@ -29,6 +29,6 @@ jobs:
           bun-version: latest
           registry-url: https://registry.npmjs.org/
       - run: bun install
-      - run: bun publish
+      - run: cd dist/ngx-translate-toolkit && bun publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

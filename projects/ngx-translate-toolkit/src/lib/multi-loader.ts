@@ -26,9 +26,8 @@ import { isDevMode, Type } from '@angular/core';
 type Fetch = NonNullable<Document['defaultView']>['fetch'];
 type Handle = InstanceType<typeof HttpBackend>['handle'];
 
-const fallback = Promise.reject(
-  'fetch not available, is this server side ?'
-) as unknown as Fetch;
+const fallback: Fetch = () =>
+  Promise.reject('fetch not available, is this server side ?');
 
 const noHandle = () =>
   throwError(() => ({

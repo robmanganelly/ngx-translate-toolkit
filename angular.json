@@ -25,9 +25,12 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/ngx-translate-toolkit/tsconfig.spec.json"
+            "tsConfig": "projects/ngx-translate-toolkit/tsconfig.spec.json",
+            "runner": "vitest",
+            "buildTarget": "::development",
+            "codeCoverage": true
           }
         }
       }

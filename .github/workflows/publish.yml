@@ -18,20 +18,20 @@ jobs:
       - run: bun add -d @angular/cli
       - run: bun install
       - run: bun ng test
+      - run: bun ng build --configuration production ngx-translate-toolkit
+        env:
+          CI: true # to avoid interactive prompts during build
 
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v1
+      - uses: actions/setup-node@v4
         with:
-          bun-version: latest
+          node-version: 22
           registry-url: https://registry.npmjs.org/
-      - run: bun add -d @angular/cli
-      - run: bun install
-      - run: bun ng build
-      - run: npm publish # token not supported in bun yet
+      - run: npm publish
         working-directory: dist/ngx-translate-toolkit
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

@@ -31,6 +31,7 @@ jobs:
       - run: bun add -d @angular/cli
       - run: bun install
       - run: bun ng build
-      - run: cd dist/ngx-translate-toolkit &&bun publish
+      - run: npm publish # token not supported in bun yet
+        working-directory: dist/ngx-translate-toolkit
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

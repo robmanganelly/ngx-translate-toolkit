@@ -7,6 +7,11 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
+    "paths": {
+      "ngx-translate-toolkit": [
+        "./dist/ngx-translate-toolkit"
+      ]
+    },
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "isolatedModules": true,
@@ -22,5 +27,13 @@
     "typeCheckHostBindings": true,
     "strictTemplates": true
   },
-  "files": []
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/ngx-translate-toolkit/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/ngx-translate-toolkit/tsconfig.spec.json"
+    }
+  ]
 }

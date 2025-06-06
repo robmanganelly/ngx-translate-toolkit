@@ -88,7 +88,7 @@ export class MultiLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<TranslationObject> {
     const urls = this._sources.map((s) => this.#buildUrl(s, lang));
 
-    const fetcher = this.#isHttp ? this.#fetchData(urls) : this.#get(urls);
+    const fetcher = this.#isHttp ?  this.#get(urls) : this.#fetchData(urls);
 
     return from(fetcher).pipe(
       catchError((err) => {

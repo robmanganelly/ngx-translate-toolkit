@@ -37,15 +37,15 @@ jobs:
         with:
           name: build-artifacts
           path: build
-      - name: Install tree
-        run: sudo apt-get update && sudo apt-get install -y tree
-      - name: Show artifact contents
-        run: tree -C -a -f -L 5
+      # - name: Install tree
+      #   run: sudo apt-get update && sudo apt-get install -y tree
+      # - name: Show artifact contents
+      #   run: tree -C -a -f -L 5
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org/
       - run: npm publish
-        working-directory: dist/ngx-translate-toolkit
+        working-directory: build
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

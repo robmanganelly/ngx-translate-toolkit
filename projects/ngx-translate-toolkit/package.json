@@ -17,5 +17,9 @@
   "author": {
     "url": "https://github.com/robmanganelly",
     "name": "robmanganelly"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robmanganelly/ngx-translate-toolkit"
   }
 }

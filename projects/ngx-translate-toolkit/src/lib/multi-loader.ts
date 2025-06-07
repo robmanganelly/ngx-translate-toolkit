@@ -3,98 +3,74 @@ import {
   TranslateLoader,
   TranslationObject,
 } from '@ngx-translate/core';
-import {
-  catchError,
-  filter,
-  firstValueFrom,
-  from,
-  map,
-  Observable,
-  of,
-} from 'rxjs';
+import { catchError, filter, forkJoin, from, map, Observable, of } from 'rxjs';
 import { languageSourcePlaceholder } from './constants';
-import {
-  HttpBackend,
-  HttpErrorResponse,
-  HttpRequest,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpBackend, HttpRequest, HttpResponse } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
 
-const fallback = () => Promise.resolve({} as Response);
+const fb = () => Promise.resolve({} as Response);
 
 export class MultiLoader implements TranslateLoader {
-  #isHttp: boolean;
-
   constructor(
-    private _api: Document | HttpBackend,
-    private _sources: string[]
-  ) {
-    this.#isHttp = _api instanceof HttpBackend;
+    private http: boolean,
+    private a: Document | HttpBackend,
+    private src: string[]
+  ) {}
+
+  #bld(src: string, lang: string) {
+    return src.replace(languageSourcePlaceholder, lang);
   }
 
-  #buildUrl(source: string, lang: string) {
-    return source.replace(languageSourcePlaceholder, lang);
+  #merge(ts: TranslationObject[]): TranslationObject {
+    return ts.reduce(
+      (a, c) => mergeDeep(a, c),
+      {} as TranslationObject
+    );
   }
 
-  async #get(urls: string[]): Promise<TranslationObject> {
-    if (!this.#isHttp) {
+  #get$(urls: string[]): Observable<TranslationObject> {
+    if (!this.http) {
       throw new Error('MultiLoader must be used with HttpBackend');
     }
 
-    // TODO optimize for httpBackend <Observable API>
-    const translations = await Promise.all(
-      urls.map((url) =>
-        firstValueFrom(
-          (this._api as HttpBackend).handle(new HttpRequest('GET', url)).pipe(
-            filter((e) => e instanceof HttpResponse),
-            map((r) => r.body),
-            catchError((r: unknown) => {
-             if(r instanceof HttpErrorResponse) console.warn(r.url, r.statusText, 'while fetching translations');
-             else console.warn('Unknown error while fetching translations', url );
-              return of({} as TranslationObject);
-            })
-          )
+    const rqs = urls
+      .map((url) => new HttpRequest('GET', url, { responseType: 'json' }))
+      .map((req) =>
+        (this.a as HttpBackend).handle(req).pipe(
+          filter((e): e is HttpResponse<unknown> => e instanceof HttpResponse),
+          map((r) => r.body ?? ({} as TranslationObject)),
+          catchError(() => of({} as TranslationObject))
         )
-      )
-    );
-    return translations.reduce(
-      (acc, curr) => mergeDeep(acc, curr),
-      {} as TranslationObject
-    );
+      );
+
+    return forkJoin(rqs).pipe(map((r) => this.#merge(r)));
   }
 
-  async #fetchData(urls: string[]): Promise<TranslationObject> {
-    if (this.#isHttp) {
+  async #fetch(urls: string[]): Promise<TranslationObject> {
+    if (this.http) {
       throw new Error('MultiLoader must be used with Fetch');
     }
 
-    const responses = await Promise.all(
-      urls.map((u) =>
-        ((this._api as Document).defaultView?.fetch ?? fallback)(u)
-      )
+    const rs = await Promise.all(
+      urls.map((u) => ((this.a as Document).defaultView?.fetch ?? fb)(u))
     );
-    // log errors if any
-    responses.forEach((r) => {
+    rs.forEach((r) => {
       if (!r.ok)
         console.warn(r.url, r.statusText, 'while fetching translations');
     });
-    const translations: TranslationObject[] = await Promise.all(
-      responses.map((r) => (r.ok ? r.json() : Promise.resolve({})))
-    );
-    return translations.reduce(
-      (acc, curr) => mergeDeep(acc, curr),
-      {} as TranslationObject
+
+    return this.#merge(
+      await Promise.all(rs.map((r) => (r.ok ? r.json() : Promise.resolve({}))))
     );
   }
 
   // implementation
   getTranslation(lang: string): Observable<TranslationObject> {
-    const urls = this._sources.map((s) => this.#buildUrl(s, lang));
+    const urls = this.src.map((s) => this.#bld(s, lang));
 
-    const fetcher = this.#isHttp ? this.#get(urls) : this.#fetchData(urls);
+    const r$ = this.http ? this.#get$(urls) : from(this.#fetch(urls));
 
-    return from(fetcher).pipe(
+    return r$.pipe(
       catchError((err) => {
         if (isDevMode()) console.error('MultiLoader error', err);
         return of({} as TranslationObject);

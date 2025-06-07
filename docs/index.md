@@ -4,7 +4,9 @@ title: Overview
 next_page: installation.html
 ---
 
-# NGX Translate Toolkit
+## NGX Translate Toolkit
+
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://robmanganelly.github.io/ngx-translate-toolkit/)
 
 ## Overview
 

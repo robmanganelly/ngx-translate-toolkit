@@ -1,4 +1,14 @@
-# Publishable
+# NGX Translate Toolkit
+
+
+## Documentation
+
+Explore the full documentation on [GitHub Pages](https://GITHUB_USERNAME.github.io/my-angular-library/).
+
+- [Getting Started](https://GITHUB_USERNAME.github.io/my-angular-library/getting-started.html)
+- [API Reference](https://GITHUB_USERNAME.github.io/my-angular-library/api.html)
+
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://GITHUB_USERNAME.github.io/my-angular-library/)
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
 
@@ -60,11 +70,4 @@ For more information on using the Angular CLI, including detailed command refere
 
 ---
 
-## Documentation
 
-Explore the full documentation on [GitHub Pages](https://GITHUB_USERNAME.github.io/my-angular-library/).
-
-- [Getting Started](https://GITHUB_USERNAME.github.io/my-angular-library/getting-started.html)
-- [API Reference](https://GITHUB_USERNAME.github.io/my-angular-library/api.html)
-
-[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://GITHUB_USERNAME.github.io/my-angular-library/)

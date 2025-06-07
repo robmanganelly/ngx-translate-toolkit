@@ -24,11 +24,11 @@ describe('MultiLoader', () => {
   });
 
   it('should create an instance with HttpBackend', () => {
-    expect(new MultiLoader(http, [])).toBeInstanceOf(MultiLoader);
+    expect(new MultiLoader(true, http, [])).toBeInstanceOf(MultiLoader);
   });
 
   it('should create an instance with Document', () => {
-    expect(new MultiLoader(doc, [])).toBeInstanceOf(MultiLoader);
+    expect(new MultiLoader(false, doc, [])).toBeInstanceOf(MultiLoader);
   });
 
   // TODO: add tests for loading translations

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { withTranslationSource, sanitizedSource, buildTranslationSource, defaultSource } from './features';
+import { withTranslationSource, sanitize, buildSrc, defaultSource } from './features';
 
 describe('Translation Features', () => {
   describe('withTranslationSource', () => {
@@ -22,19 +22,19 @@ describe('Translation Features', () => {
   describe('sanitizedSource', () => {
     it('should return the source if it is valid', () => {
       const validSource = 'assets/i18n/{{ lang }}.json';
-      expect(sanitizedSource(validSource)).toBe(validSource);
+      expect(sanitize(validSource)).toBe(validSource);
     });
 
     it('should throw an error if the source is invalid', () => {
       const invalidSource = 'assets/i18n/en.js';
-      expect(() => sanitizedSource(invalidSource)).toThrowError();
+      expect(() => sanitize(invalidSource)).toThrowError();
     });
   });
 
   describe('buildTranslationSource', () => {
     it('should build the correct translation source path', () => {
       const locator = { assetsPath: 'custom/assets', locator: 'en' };
-      expect(buildTranslationSource(locator)).toBe('custom/assets/i18n/en/{{ lang }}.json');
+      expect(buildSrc(locator)).toBe('custom/assets/i18n/en/{{ lang }}.json');
     });
   });
 });

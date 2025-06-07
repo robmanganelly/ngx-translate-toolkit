@@ -1,30 +1,18 @@
 ---
 layout: default
-title: Getting Started
+title: Installation
 ---
 
 ## Installation
 
-Install the library via npm:
+### Bun
 
 ```bash
-npm install my-angular-library
+bun add @ngx-translate/core @robmanganelly/ngx-translate-toolkit
 ```
 
-{% include copy-button.html id="code-snippet-1" %}
+### npm
 
-## Usage
-
-Import the library in your Angular app:
-
-```typescript
-import { MyLibraryModule } from 'my-angular-library';
-
-@NgModule({
-  imports: [MyLibraryModule],
-  // ...
-})
-export class AppModule {}
+```bash
+npm install @ngx-translate/core @robmanganelly/ngx-translate-toolkit
 ```
-
-{% include copy-button.html id="code-snippet-2" %}

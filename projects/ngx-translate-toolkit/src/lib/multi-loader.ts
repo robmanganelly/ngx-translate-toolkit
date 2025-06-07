@@ -49,8 +49,9 @@ export class MultiLoader implements TranslateLoader {
           (this._api as HttpBackend).handle(new HttpRequest('GET', url)).pipe(
             filter((e) => e instanceof HttpResponse),
             map((r) => r.body),
-            catchError((r: HttpErrorResponse) => {
-              console.warn(r.url, r.statusText, 'while fetching translations');
+            catchError((r: unknown) => {
+             if(r instanceof HttpErrorResponse) console.warn(r.url, r.statusText, 'while fetching translations');
+             else console.warn('Unknown error while fetching translations', url );
               return of({} as TranslationObject);
             })
           )

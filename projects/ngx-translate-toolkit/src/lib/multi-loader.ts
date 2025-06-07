@@ -11,21 +11,17 @@ import {
   map,
   Observable,
   of,
-  throwError,
 } from 'rxjs';
 import { languageSourcePlaceholder } from './constants';
 import {
   HttpBackend,
   HttpErrorResponse,
-  HttpEvent,
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
-import { isDevMode, Type } from '@angular/core';
+import { isDevMode } from '@angular/core';
 
-const fallback = () =>
-  Promise.reject('fetch not available, is this server side ?');
-
+const fallback = () => Promise.resolve({} as Response);
 
 export class MultiLoader implements TranslateLoader {
   #isHttp: boolean;
@@ -42,7 +38,6 @@ export class MultiLoader implements TranslateLoader {
   }
 
   async #get(urls: string[]): Promise<TranslationObject> {
-
     if (!this.#isHttp) {
       throw new Error('MultiLoader must be used with HttpBackend');
     }
@@ -69,7 +64,15 @@ export class MultiLoader implements TranslateLoader {
   }
 
   async #fetchData(urls: string[]): Promise<TranslationObject> {
-    const responses = await Promise.all(urls.map((u) => ((this._api as Document).defaultView?.fetch ?? fallback)(u)));
+    if (this.#isHttp) {
+      throw new Error('MultiLoader must be used with Fetch');
+    }
+
+    const responses = await Promise.all(
+      urls.map((u) =>
+        ((this._api as Document).defaultView?.fetch ?? fallback)(u)
+      )
+    );
     // log errors if any
     responses.forEach((r) => {
       if (!r.ok)
@@ -88,7 +91,7 @@ export class MultiLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<TranslationObject> {
     const urls = this._sources.map((s) => this.#buildUrl(s, lang));
 
-    const fetcher = this.#isHttp ?  this.#get(urls) : this.#fetchData(urls);
+    const fetcher = this.#isHttp ? this.#get(urls) : this.#fetchData(urls);
 
     return from(fetcher).pipe(
       catchError((err) => {

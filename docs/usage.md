@@ -321,9 +321,7 @@ readonly translations = tagFactory(
 
 Your IDE will automatically suggest the available keys for translation, and if you try to use a key that does not exist, it will show an error.
 
-
 Autocompletion
-
 
 ![Example of IDE auto-completion](./assets/ide_autocomplete.png)
 
@@ -331,12 +329,92 @@ path
 
 ![Example of IDE showing path](./assets/ide_showing_path.png)
 
-
 Missing key Error
 
 ![Example of IDE showing error for missing key](./assets/ide_error_missing_key.png)
 
-
 Missing key Error in Template
 
 ![Example of IDE showing error for missing key](./assets/error_template.png)
+
+### Extracting specific keys from the index
+
+When you're working with loops, it is useful to have ways to point to specific keys efficiently.
+
+The toolkit provides a helper function `tagAtIndex` that allows you to extract a specific key from the index of your translation tags.
+Take into account that if you're using that function, the order in which you declare the keys in your `tagFactory` is important, as it will determine the index of each key.
+
+It also provides a `tagsAtRange` function that allows you to specify a subset of keys based on their index range. This functions supports both start and end indexes, and behaves like a slice operation.
+
+```typescript
+import { Component } from '@angular/core';
+import {
+  tagAtIndex,
+  tagFactory,
+  tagsAtRange,
+} from '@robmanganelly/ngx-translate-toolkit';
+import { translationPaths } from '../app.config';
+import { TranslatePipe } from '@ngx-translate/core';
+
+@Component({
+  selector: 'app-confirm-actions',
+  imports: [TranslatePipe],
+  templateUrl: './confirm-actions.html',
+  styleUrl: './confirm-actions.scss',
+})
+export class ConfirmActions {
+
+  readonly translations = tagFactory(
+    translationPaths.component('confirmActions'),
+    [
+      'title',
+      'description',
+      'welcomeMessage',
+      // tags for button labels, ordered
+      'buttonLabelSubmit',
+      'buttoneLabelCancel',
+      'buttonLabelTertiary',
+      // tags for tooltips, ordered
+      'buttonTooltipSubmit',
+      'buttonTooltipCancel',
+      'buttonTooltipTertiary',
+      // menu keys... they need to be ordered 
+      'menuCut',
+      'menuCopy',
+      'menuPaste',
+      'menuDelete',
+      'menuSelectAll',
+      'menuSelectNone',
+      'menuSelectInvert',
+    ]
+  );
+
+
+  readonly menuActions = tagsAtRange(this.translations,7).map(tag=>{
+    return {
+      label: tag,
+      command: ()=>{/** do something */}
+    }
+  })
+
+  private buttonTypes = ['primary', 'secondary', 'tertiary'] as const;
+
+  readonly buttonConfigs = this.buttonTypes.map((type, i) => {
+    return {
+      type,
+      label: tagAtIndex(this.translations, i + 4),
+      tooltip: tagAtIndex(this.translations, i + 7),
+      command: ()=>this.onClickType(type) 
+    }
+  })
+
+
+  onClickType(type: 'primary' | 'secondary' | 'tertiary') {
+    // Handle button click based on type
+  }
+
+
+
+
+}
+```

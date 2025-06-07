@@ -291,8 +291,8 @@ import { singletonPath, tagFactory } from "@robmanganelly/ngx-translate-toolkit"
   <span>\{\{ translations.description | translate \}\}</span>
  
   <div class="row">
-    <button [title]="translations.buttonTooltipCancel | translate">\{\{   translations.buttonLabelCancel | translate \}\}</button>
-    <button [title]="translations.buttonTooltipSubmit | translate">\{\{ translations.buttonLabelSubmit | translate \}\}</button>
+    <button title="\{\{translations.buttonTooltipCancel | translate\}\}">\{\{   translations.buttonLabelCancel | translate \}\}</button>
+    <button title="\{\{translations.buttonTooltipSubmit | translate\}\}">\{\{ translations.buttonLabelSubmit | translate \}\}</button>
     </div>
 </div>`,
   styles: ''

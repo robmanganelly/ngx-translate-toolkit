@@ -2,6 +2,7 @@
 layout: default
 title: Overview
 next_page: installation.html
+next_page_label: Installation
 ---
 
 ## NGX Translate Toolkit

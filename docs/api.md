@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Overview
-next_page: installation.html
+previous_page: usage.html
+previous_page_label: Usage
 ---
 
 TODO

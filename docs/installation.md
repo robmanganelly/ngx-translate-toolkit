@@ -2,7 +2,9 @@
 layout: default
 title: Installation
 next_page: usage.html
-prev_page: overview.html
+next_page_label: Usage
+previous_page: index.html
+previous_page_label: Overview
 ---
 
 ## Installation

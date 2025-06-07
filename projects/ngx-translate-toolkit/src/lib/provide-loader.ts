@@ -32,7 +32,7 @@ export const useFetchMultiLoader = (
 ): FactoryProvider => ({
   provide: TranslateLoader,
   useFactory: (_document: Document) =>
-    new MultiLoader(_document, [withTranslationSource(), ...features]),
+    new MultiLoader(false, _document, [withTranslationSource(), ...features]),
   deps: [DOCUMENT],
 });
 
@@ -64,6 +64,6 @@ export const useHttpMultiLoader = (
 ): FactoryProvider => ({
   provide: TranslateLoader,
   useFactory: (_http: HttpBackend) =>
-    new MultiLoader(_http, [withTranslationSource(), ...features]),
+    new MultiLoader(true, _http, [withTranslationSource(), ...features]),
   deps: [HttpBackend],
 });

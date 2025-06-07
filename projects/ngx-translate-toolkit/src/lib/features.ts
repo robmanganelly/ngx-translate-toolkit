@@ -12,15 +12,15 @@ export type TranslationSource = string;
  */
 export const defaultSource = `i18n/${languageSourcePlaceholder}.json`;
 
-export const sanitizedSource = (source: string): TranslationSource => {
-  if (source.endsWith(`${languageSourcePlaceholder}.json`)) return source;
+export const sanitize = (src: string): TranslationSource => {
+  if (src.endsWith(`${languageSourcePlaceholder}.json`)) return src;
   else
     throw new Error(
-      `Invalid translation source: ${source}. Must end with '${languageSourcePlaceholder}.json'`
+      `Invalid translation source: ${src}. Must end with '${languageSourcePlaceholder}.json'`
     );
 };
 
-export const buildTranslationSource = (
+export const buildSrc = (
   source: TranslationSourceLocator
 ): TranslationSource => {
   const { assetsPath = 'assets', locator } = source;
@@ -42,6 +42,6 @@ export const withTranslationSource = (
   source?: string | TranslationSourceLocator
 ): TranslationSource => {
   if (source === undefined) return defaultSource;
-  else if (typeof source === 'string') return sanitizedSource(source);
-  else return buildTranslationSource(source);
+  else if (typeof source === 'string') return sanitize(source);
+  else return buildSrc(source);
 };

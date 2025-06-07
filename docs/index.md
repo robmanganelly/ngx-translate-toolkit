@@ -42,7 +42,7 @@ The Toolkit follows a pattern that makes easier for developers to manage transla
    - the root key is the project name (e.g. `my-app` or `my-lib`)
    - under the root key, you have one key for the type of the structure, example `components`, `services`, `directives`, `pipes`, etc.
    - under each type key, you have a key for each component or service, etc. that needs translations.
-   - inside the individual component we encourage to have a flat structure, to make it easier for people to find the keys they need. for that case, we recommend using camelCase to compose the keys. (There are some exceptions, where you have dynamic keys that make more sense nested, see usage example)
+   - inside the individual component we encourage to have a flat structure, to make it easier for people to find the keys they need. for that case, we recommend using camelCase to compose the keys. (There are some exceptions, where you have dynamic keys that make more sense nested, see examples in [Usage](usage.html) section)
 
    ```json
    {

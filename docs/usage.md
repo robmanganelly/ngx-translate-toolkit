@@ -285,13 +285,22 @@ import { singletonPath, tagFactory } from "@robmanganelly/ngx-translate-toolkit"
 
 @Component({
   selector: 'app-confirm-actions',
-  templateUrl: './confirm-actions.component.html',
+  templateUrl: `<div class="confirm-actions">
+
+  <span>{{ translations.title | translate }}</span>
+  <span>{{ translations.description | translate }}</span>
+ 
+  <div class="row">
+    <button [title]="translations.buttonTooltipCancel | translate">{{   translations.buttonLabelCancel | translate }}</button>
+    <button [title]="translations.buttonTooltipSubmit | translate">{{ translations.buttonLabelSubmit | translate }}</button>
+    </div>
+</div>`,
   styles: ''
 })
 export class ConfirmActionsComponent {
 
 readonly translations = tagFactory(
-  singletonPath('confirmActions')
+  singletonPath('confirmActions'),
   [
     'title',
     'description',
@@ -305,17 +314,3 @@ readonly translations = tagFactory(
 
 }
 ```
-
-```html
-<!-- confirm-actions.component.html -->
- <div class="confirm-actions">
-
-  <span>{{ translations.title | translate }}</span>
-  <span>{{ translations.description | translate }}</span>
- 
-  <div class="row">
-    <button [title]="translations.buttonTooltipCancel | translate">{{   translations.buttonLabelCancel | translate }}</button>
-    <button [title]="translations.buttonTooltipSubmit | translate">{{ translations.buttonLabelSubmit | translate }}</button>
-    </div>
-</div>
- ```

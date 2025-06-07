@@ -133,3 +133,45 @@ export const appConfig: ApplicationConfig = {
 - Inside each library's `i18n` directory, create JSON files for each language you want to support (e.g., `en-us.json`, `fr-fr.json`).
 
 ![Directory Structure](./assets/i18n_structure.png)
+
+### Translation File Structure
+
+To ensure that your translation files are compatible with the NGX Translate Toolkit, they must follow a specific JSON structure. This structure allows the toolkit helpers to properly generate keys and load them at runtime.
+
+This is one example of a file structure:
+
+- `project-name` is optional, sometimes useful for debugging purposes. Feel free to add any metadata you need outside the root key, **use snake case** to identify metadata keys.
+- `root key` is required it should match the name of the project. root keys, and **every key inside it must be in camelCase** .
+- `type keys` they are direct children of the root key, and must indicate the type of the structure where they are used. if your project does not have a given structure, you can omit it. Most projects only have `components` and `services`, but others are supported.
+- `block keys` they are direct children of a type key and will contain a block of translation key-value pairs with their values. we recommend each block key to be used in a single file. block keys must be in camelCase and match the name of the file where they are used, omitting the file type and extension (e.g., `confirmActions` for `confirm-actions.component.ts` or `confirm-actions.service.ts`).
+- `translation keys` are the actual translation strings, they must be in camelCase and should be descriptive of their purpose. These keys will be used in your application to retrieve the corresponding translations.
+
+```json
+{
+  "project-name": "shared-uis",
+  "sharedUis": {
+    "components": {
+      "confirmActions": {
+        "primaryButtonLabel": "Confirm",
+        "secondaryButtonLabel": "Cancel",
+        "title": "Confirm Action",
+        "message": "Are you sure you want to perform this action?",
+        "primaryButtonTooltip": "Click to confirm the action",
+        "secondaryButtonTooltip": "Click to cancel the action"
+      }
+    },
+    "services": {
+      "confirmActions": {
+        "confirmSuccessMessage": "Action confirmed successfully.",
+        "confirmFailureMessage": "Failed to confirm the action. Please try again."
+      }
+    },
+    "pipes": {},
+    "directives": {},
+    "guards": {},
+    "routes": {},
+    "stores": {},
+    "resolvers": {}
+  }
+}
+```

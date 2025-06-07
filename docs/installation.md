@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Installation
+next_page: usage.html
+prev_page: overview.html
 ---
 
 ## Installation

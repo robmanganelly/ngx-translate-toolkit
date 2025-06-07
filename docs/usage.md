@@ -418,3 +418,10 @@ export class ConfirmActions {
 
 }
 ```
+
+### Using with @let
+
+In angular templates you can create template variables using `@let` to simplify the usage of translation keys.
+This reduces boilerplate and makes your templates cleaner.
+
+![Example of using @let](./assets/let_tags.png)

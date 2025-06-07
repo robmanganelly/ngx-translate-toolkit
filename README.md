@@ -2,9 +2,13 @@
 
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://robmanganelly.github.io/ngx-translate-toolkit/)
 
+Translations at scale.
+
 ## Documentation
 
-The NGX Translate Toolkit is an angular library designed to extend `@ngx-translate/core` and streamline the process of managing translations in projects involving several Angular applications and libraries. It provides a set of tools and utilities to help developers easily integrate and maintain translations, making it simpler to create multilingual applications on large scale projects or monorepos where multiple Angular applications and libraries share common translation files, especially on micro-frontends.
+The NGX Translate Toolkit is an angular library designed to extend `@ngx-translate/core` and streamline the process of managing translations in **large Angular projects**.
+
+It provides a set of tools and utilities to help developers easily integrate and maintain translations, making it simpler to create multilingual applications on projects where multiple Angular applications and libraries share common translation files.
 
 Explore the full documentation on [GitHub Pages](https://robmanganelly.github.io/ngx-translate-toolkit/).
 

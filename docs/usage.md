@@ -133,3 +133,189 @@ export const appConfig: ApplicationConfig = {
 - Inside each library's `i18n` directory, create JSON files for each language you want to support (e.g., `en-us.json`, `fr-fr.json`).
 
 ![Directory Structure](./assets/i18n_structure.png)
+
+### Translation File Structure
+
+To ensure that your translation files are compatible with the NGX Translate Toolkit, they must follow a specific JSON structure. This structure allows the toolkit helpers to properly generate keys and load them at runtime.
+
+This is one example of a file structure:
+
+- `project-name` is optional, sometimes useful for debugging purposes. Feel free to add any metadata you need outside the root key, **use snake case** to identify metadata keys.
+- `root key` is required it should match the name of the project. root keys, and **every key inside it must be in camelCase** .
+- `type keys` they are direct children of the root key, and must indicate the type of the structure where they are used. if your project does not have a given structure, you can omit it. Most projects only have `components` and `services`, but others are supported.
+- `block keys` they are direct children of a type key and will contain a block of translation key-value pairs with their values. we recommend each block key to be used in a single file. block keys must be in camelCase and match the name of the file where they are used, omitting the file type and extension (e.g., `confirmActions` for `confirm-actions.component.ts` or `confirm-actions.service.ts`).
+- `translation keys` are the actual translation strings, they must be in camelCase and should be descriptive of their purpose. These keys will be used in your application to retrieve the corresponding translations.
+
+```json
+{
+  "project-name": "shared-uis",
+  "sharedUis": {
+    "components": {
+      "confirmActions": {
+        "primaryButtonLabel": "Confirm",
+        "secondaryButtonLabel": "Cancel",
+        "title": "Confirm Action",
+        "message": "Are you sure you want to perform this action?",
+        "primaryButtonTooltip": "Click to confirm the action",
+        "secondaryButtonTooltip": "Click to cancel the action"
+      }
+    },
+    "services": {
+      "confirmActions": {
+        "confirmSuccessMessage": "Action confirmed successfully.",
+        "confirmFailureMessage": "Failed to confirm the action. Please try again."
+      }
+    },
+    "pipes": {},
+    "directives": {},
+    "guards": {},
+    "routes": {},
+    "stores": {},
+    "resolvers": {}
+  }
+}
+```
+
+### Using helpers to generate translation keys
+
+#### Paths for a project
+
+Use the helper function `pathFactory` to create a translation path for your project. This function will return a path object that can be used to generate translation keys for your components, services, and other structures.
+
+```typescript
+// app.config.ts or any other configuration file
+import { pathFactory } from "@robmanganelly/ngx-translate-toolkit";
+export const translationPaths = pathFactory("myProjectName");
+```
+
+#### Tag Factory
+
+Once you have defined your translation paths you can create tags for components, services or other structure using the helper function  `tagFactory`.
+
+This function requires a string that contains the full path up to the block key and a list of strings that represent the translation keys you want to generate. For the first one we use the `translationPaths` object created with `pathFactory`.
+
+Example:
+
+```typescript
+// You can now use translationPaths to generate keys for your components and services
+// Example usage in a component
+import { Component } from "@angular/core";
+import { translationPaths } from "./app.constants";
+import { tagFactory } from "@robmanganelly/ngx-translate-toolkit";
+
+@Component({
+  selector: 'app-confirm-actions',
+  template: '',
+  styles: ''
+})
+export class ConfirmActionsComponent {
+
+readonly translations = tagFactory(
+  translationPaths.component('confirmActions'), 
+  [
+    'title',
+    'description',
+    'welcomeMessage',
+    'buttoneLabelCancel',
+    'buttonTooltipCancel',
+    'buttonLabelSubmit',
+    'buttonTooltipSubmit',
+  ]
+);
+
+}
+
+```
+
+#### Singleton
+
+There are edge cases where your library exports a single component.
+In that case, you don't need translation paths.
+
+```typescript
+// You may now use translationPaths to generate keys for your components and services
+// Example usage in a component
+import { Component } from "@angular/core";
+import { singletonPath, tagFactory } from "@robmanganelly/ngx-translate-toolkit";
+
+@Component({
+  selector: 'app-confirm-actions',
+  template: '',
+  styles: ''
+})
+export class ConfirmActionsComponent {
+
+readonly translations = tagFactory(
+  singletonPath('confirmActions')
+  [
+    'title',
+    'description',
+    'welcomeMessage',
+    'buttonLabelCancel',
+    'buttonTooltipCancel',
+    'buttonLabelSubmit',
+    'buttonTooltipSubmit',
+  ]
+);
+
+}
+```
+
+ > If your singleton is not a component, but a service, you can still use one of the `tagFactory` members, as they are exported individually. Just make sure to add the project name
+
+ ```typescript
+import { serviceKey } from "@robmanganelly/ngx-translate-toolkit";
+
+// will generate myProjectName.services.confirmActions
+const myServiceKey = serviceKey("myProjectName", "myServiceName");
+
+```
+
+#### Using translation keys in templates
+
+In your angular templates you can use the `translate` pipe to retrieve the translation strings generated by the toolkit. You can use the keys you created with `tagFactory` directly in your templates.
+
+They have the advantage of being type-safe and will not compile if you change the key definition and forget to update the template.
+
+```typescript
+// You may now use translationPaths to generate keys for your components and services
+// Example usage in a component
+import { Component } from "@angular/core";
+import { singletonPath, tagFactory } from "@robmanganelly/ngx-translate-toolkit";
+
+@Component({
+  selector: 'app-confirm-actions',
+  templateUrl: './confirm-actions.component.html',
+  styles: ''
+})
+export class ConfirmActionsComponent {
+
+readonly translations = tagFactory(
+  singletonPath('confirmActions')
+  [
+    'title',
+    'description',
+    'welcomeMessage',
+    'buttonLabelCancel',
+    'buttonTooltipCancel',
+    'buttonLabelSubmit',
+    'buttonTooltipSubmit',
+  ]
+);
+
+}
+```
+
+```html
+<!-- confirm-actions.component.html -->
+ <div class="confirm-actions">
+
+  <span>{{ translations.title | translate }}</span>
+  <span>{{ translations.description | translate }}</span>
+ 
+  <div class="row">
+    <button [title]="translations.buttonTooltipCancel | translate">{{   translations.buttonLabelCancel | translate }}</button>
+    <button [title]="translations.buttonTooltipSubmit | translate">{{ translations.buttonLabelSubmit | translate }}</button>
+    </div>
+</div>
+ ```

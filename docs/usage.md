@@ -286,15 +286,19 @@ import { singletonPath, tagFactory } from "@robmanganelly/ngx-translate-toolkit"
 @Component({
   selector: 'app-confirm-actions',
   templateUrl: `<div class="confirm-actions">
+  <span>\{\{ translations.tags.title | translate \}\}</span>
+  <span>\{\{ translations.tags.description | translate \}\}</span>
 
-  <span>\{\{ translations.title | translate \}\}</span>
-  <span>\{\{ translations.description | translate \}\}</span>
- 
   <div class="row">
-    <button title="\{\{translations.buttonTooltipCancel | translate\}\}">\{\{   translations.buttonLabelCancel | translate \}\}</button>
-    <button title="\{\{translations.buttonTooltipSubmit | translate\}\}">\{\{ translations.buttonLabelSubmit | translate \}\}</button>
-    </div>
-</div>`,
+    <button title="\{\{translations.tags.buttonTooltipCancel | translate\}\}">
+      \{\{ translations.tags.buttoneLabelCancel| translate \}\}
+    </button>
+    <button title="\{\{translations.tags.buttonTooltipSubmit | translate\}\}">
+      \{\{ translations.tags.buttonLabelSubmit | translate \}\}
+    </button>
+  </div>
+</div>
+`,
   styles: ''
 })
 export class ConfirmActionsComponent {
@@ -314,3 +318,25 @@ readonly translations = tagFactory(
 
 }
 ```
+
+Your IDE will automatically suggest the available keys for translation, and if you try to use a key that does not exist, it will show an error.
+
+
+Autocompletion
+
+
+![Example of IDE auto-completion](./assets/ide_autocomplete.png)
+
+path
+
+![Example of IDE showing path](./assets/ide_showing_path.png)
+
+
+Missing key Error
+
+![Example of IDE showing error for missing key](./assets/ide_error_missing_key.png)
+
+
+Missing key Error in Template
+
+![Example of IDE showing error for missing key](./assets/error_template.png)

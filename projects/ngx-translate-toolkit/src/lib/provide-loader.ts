@@ -9,7 +9,7 @@ import { HttpBackend } from '@angular/common/http';
  *
  * It uses fetch API
  * Use only with client-side rendered applications,
- * if your app is rendered by the server prefer {@link useHttpMultiLoader }
+ * if your app is rendered by the server prefer {@link provideHttpMultiLoader }
  *
  * Example
  * ```typescript
@@ -27,7 +27,7 @@ import { HttpBackend } from '@angular/common/http';
  * @param features
  * @returns
  */
-export const useFetchMultiLoader = (
+export const provideFetchMultiLoader = (
   ...features: TranslationSource[]
 ): FactoryProvider => ({
   provide: TranslateLoader,
@@ -40,7 +40,7 @@ export const useFetchMultiLoader = (
  * Use when providing {@link TranslateService }. Add any sources for translations
  *
  * It uses httpBackend
- * If you prefer using fetch API use {@link useFetchMultiLoader }
+ * If you prefer using fetch API use {@link provideFetchMultiLoader }
  *
  * Example
  * ```typescript
@@ -59,7 +59,7 @@ export const useFetchMultiLoader = (
  * @param features
  * @returns
  */
-export const useHttpMultiLoader = (
+export const provideHttpMultiLoader = (
   ...features: TranslationSource[]
 ): FactoryProvider => ({
   provide: TranslateLoader,

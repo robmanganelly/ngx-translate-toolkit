@@ -1,6 +1,6 @@
 {
   "name": "@robmanganelly/ngx-translate-toolkit",
-  "version": "1.0.1",
+  "version": "2.0.1",
   "peerDependencies": {
     "@angular/common": "^20.0.0",
     "@angular/core": "^20.0.0",

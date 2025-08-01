@@ -17,11 +17,11 @@ We also assume that you are using the standalone API for your angular applicatio
 
 In your `app.config.ts`, at the time of providing `TranslateService` you will pass to the `loader` attribute one of the functions exported by the toolkit:
 
-- `useHttpMultiLoader` It is recommended for most applications, as it uses Angular's `HttpBackend` to load translation files. It requires that you provide `HttpClient` before calling `provideTranslateService`.
+- `provideHttpMultiLoader` It is recommended for most applications, as it uses Angular's `HttpBackend` to load translation files. It requires that you provide `HttpClient` before calling `provideTranslateService`.
 
-- `useFetchMultiLoader` It is recommended for client side rendered applications, as it uses the Fetch API to load translation files. This option **cannot** be used in server-side rendered applications (SSR) or Angular Universal, as it relies on browser APIs, but it is better if you are not planning to use SSR or Angular's `HttpClient` at all.
+- `provideFetchMultiLoader` It is recommended for client side rendered applications, as it uses the Fetch API to load translation files. This option **cannot** be used in server-side rendered applications (SSR) or Angular Universal, as it relies on browser APIs, but it is better if you are not planning to use SSR or Angular's `HttpClient` at all.
 
-#### Example Configuration with useHttpMultiLoader
+#### Example Configuration with provideHttpMultiLoader
 
 ```typescript
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from "@angular/core";
@@ -29,7 +29,7 @@ import { provideRouter } from "@angular/router";
 
 import { routes } from "./app.routes";
 import { provideTranslateService } from "@ngx-translate/core";
-import { pathFactory, useHttpMultiLoader } from "@robmanganelly/ngx-translate-toolkit";
+import { pathFactory, provideHttpMultiLoader } from "@robmanganelly/ngx-translate-toolkit";
 import { provideHttpClient } from "@angular/common/http";
 
 export const translationPaths = pathFactory("testApp");
@@ -41,14 +41,14 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideTranslateService({
       defaultLanguage: "en-us",
-      loader: useHttpMultiLoader(),
+      loader: provideHttpMultiLoader(),
     }),
     provideRouter(routes),
   ],
 };
 ```
 
-#### Example Configuration with useFetchMultiLoader
+#### Example Configuration with provideFetchMultiLoader
 
 ```typescript
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from "@angular/core";
@@ -56,7 +56,7 @@ import { provideRouter } from "@angular/router";
 
 import { routes } from "./app.routes";
 import { provideTranslateService } from "@ngx-translate/core";
-import { pathFactory, useFetchMultiLoader } from "@robmanganelly/ngx-translate-toolkit";
+import { pathFactory, provideFetchMultiLoader } from "@robmanganelly/ngx-translate-toolkit";
 
 export const translationPaths = pathFactory("testApp");
 
@@ -66,7 +66,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideTranslateService({
       defaultLanguage: "en-us",
-      loader: useFetchMultiLoader(),
+      loader: provideFetchMultiLoader(),
     }),
     provideRouter(routes),
   ],
@@ -89,7 +89,7 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChang
 import { provideRouter } from "@angular/router";
 import { routes } from "./app.routes";
 import { provideTranslateService } from "@ngx-translate/core";
-import { pathFactory, useHttpMultiLoader, withTranslationSource, languageSourcePlaceholder } from "@robmanganelly/ngx-translate-toolkit";
+import { pathFactory, provideHttpMultiLoader, withTranslationSource, languageSourcePlaceholder } from "@robmanganelly/ngx-translate-toolkit";
 import { provideHttpClient } from "@angular/common/http";
 
 export const translationPaths = pathFactory("testApp");
@@ -101,7 +101,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideTranslateService({
       defaultLanguage: "en-us",
-      loader: useHttpMultiLoader(
+      loader: provideHttpMultiLoader(
         withTranslationSource({ locator: "cart" }),
         withTranslationSource({ locator: "checkout" }),
         withTranslationSource({ locator: "product-details" }),

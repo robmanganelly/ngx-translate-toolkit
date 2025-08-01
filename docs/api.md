@@ -32,7 +32,7 @@ type TranslationSource = string;
 declare const withTranslationSource: (source?: string | TranslationSourceLocator) => TranslationSource;
 ```
 
-## useFetchMultiLoader and useHttpMultiLoader
+## provideFetchMultiLoader and provideHttpMultiLoader
 
 ````typescript
 /**
@@ -40,13 +40,13 @@ declare const withTranslationSource: (source?: string | TranslationSourceLocator
  *
  * It uses fetch API
  * Use only with client-side rendered applications,
- * if your app is rendered by the server prefer {@link useHttpMultiLoader }
+ * if your app is rendered by the server prefer {@link provideHttpMultiLoader }
  *
  * Example
  * ```typescript
  * provideTranslateService({
  *   //...other properties
- *   loader: useFetchMultiLoader(
+ *   loader: provideFetchMultiLoader(
  *      // do not include the host application source, this one is included by default
  *      withTranslationSource({ locator: 'my-lib-name' }),
  *      withTranslationSource({ locator: 'another-lib-name' }),
@@ -58,19 +58,19 @@ declare const withTranslationSource: (source?: string | TranslationSourceLocator
  * @param features
  * @returns
  */
-declare const useFetchMultiLoader: (...features: TranslationSource[]) => FactoryProvider;
+declare const provideFetchMultiLoader: (...features: TranslationSource[]) => FactoryProvider;
 /**
  * Use when providing {@link TranslateService }. Add any sources for translations
  *
  * It uses httpBackend
- * If you prefer using fetch API use {@link useFetchMultiLoader }
+ * If you prefer using fetch API use {@link provideFetchMultiLoader }
  *
  * Example
  * ```typescript
  * provideTranslateService({
  *   //...other properties
  *   provideHttpClient(),
- *   loader: useHttpMultiLoader(
+ *   loader: provideHttpMultiLoader(
  *      // do not include the host application source, this one is included by default
  *      withTranslationSource({ locator: 'my-lib-name' }),
  *      withTranslationSource({ locator: 'another-lib-name' }),
@@ -82,7 +82,7 @@ declare const useFetchMultiLoader: (...features: TranslationSource[]) => Factory
  * @param features
  * @returns
  */
-declare const useHttpMultiLoader: (...features: TranslationSource[]) => FactoryProvider;
+declare const provideHttpMultiLoader: (...features: TranslationSource[]) => FactoryProvider;
 ````
 
 ## tagFactory

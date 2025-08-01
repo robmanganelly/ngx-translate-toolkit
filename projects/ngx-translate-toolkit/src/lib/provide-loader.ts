@@ -15,7 +15,7 @@ import { HttpBackend } from '@angular/common/http';
  * ```typescript
  * provideTranslateService({
  *   //...other properties
- *   loader: useFetchMultiLoader(
+ *   loader: provideFetchMultiLoader(
  *      // do not include the host application source, this one is included by default
  *      withTranslationSource({ locator: 'my-lib-name' }),
  *      withTranslationSource({ locator: 'another-lib-name' }),
@@ -47,7 +47,7 @@ export const provideFetchMultiLoader = (
  * provideTranslateService({
  *   //...other properties
  *   provideHttpClient(),
- *   loader: useHttpMultiLoader(
+ *   loader: provideHttpMultiLoader(
  *      // do not include the host application source, this one is included by default
  *      withTranslationSource({ locator: 'my-lib-name' }),
  *      withTranslationSource({ locator: 'another-lib-name' }),

@@ -38,7 +38,7 @@ export class MultiLoader implements TranslateLoader {
       .map((req) =>
         (this.a as HttpBackend).handle(req).pipe(
           filter((e): e is HttpResponse<unknown> => e instanceof HttpResponse),
-          map((r) => r.body ?? ({} as TranslationObject)),
+          map((r) => (r.body ?? {}) as TranslationObject),
           catchError(() => of({} as TranslationObject))
         )
       );

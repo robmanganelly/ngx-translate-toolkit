@@ -40,7 +40,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(),
     provideTranslateService({
-      defaultLanguage: "en-us",
+      fallbackLang: "en-us",
       loader: provideHttpMultiLoader(),
     }),
     provideRouter(routes),
@@ -65,7 +65,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideTranslateService({
-      defaultLanguage: "en-us",
+      fallbackLang: "en-us",
       loader: provideFetchMultiLoader(),
     }),
     provideRouter(routes),
@@ -100,7 +100,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(),
     provideTranslateService({
-      defaultLanguage: "en-us",
+      fallbackLang: "en-us",
       loader: provideHttpMultiLoader(
         withTranslationSource({ locator: "cart" }),
         withTranslationSource({ locator: "checkout" }),

@@ -1,0 +1,52 @@
+{
+  "$schema": "../projects/ngx-translate-toolkit/src/translation-file.schema.json",
+  "projectType": "library",
+  "projectName": "shared-components",
+  "sharedComponents": {
+    "components": {
+      "confirmDialog": {
+        "title": "Confirm Action",
+        "message": "Are you sure you want to perform this action?",
+        "confirmButtonLabel": "Confirm",
+        "cancelButtonLabel": "Cancel",
+        "confirmButtonTooltip": "Click to confirm",
+        "cancelButtonTooltip": "Click to cancel"
+      },
+      "userProfile": {
+        "title": "User Profile",
+        "editButtonLabel": "Edit",
+        "saveButtonLabel": "Save",
+        "cancelButtonLabel": "Cancel",
+        "firstNameLabel": "First Name",
+        "lastNameLabel": "Last Name",
+        "emailLabel": "Email",
+        "phoneLabel": "Phone"
+      }
+    },
+    "services": {
+      "authentication": {
+        "loginSuccessMessage": "Login successful",
+        "loginFailureMessage": "Login failed. Please try again.",
+        "logoutSuccessMessage": "Logout successful",
+        "sessionExpiredMessage": "Your session has expired. Please login again."
+      },
+      "notification": {
+        "successTitle": "Success",
+        "errorTitle": "Error",
+        "warningTitle": "Warning",
+        "infoTitle": "Information"
+      }
+    },
+    "guards": {
+      "auth": {
+        "unauthorizedMessage": "You are not authorized to access this page",
+        "redirectMessage": "Redirecting to login..."
+      }
+    },
+    "pipes": {},
+    "directives": {},
+    "resolvers": {},
+    "stores": {},
+    "routes": {}
+  }
+}

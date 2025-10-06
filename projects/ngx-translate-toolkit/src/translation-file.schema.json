@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/robmanganelly/ngx-translate-toolkit/main/projects/ngx-translate-toolkit/src/translation-file.schema.json",
+  "title": "NGX Translate Toolkit Translation File Schema",
+  "description": "JSON Schema for translation files used with @robmanganelly/ngx-translate-toolkit",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Reference to this JSON schema"
+    },
+    "projectType": {
+      "type": "string",
+      "enum": ["application", "library"],
+      "description": "Type of the project (application or library)"
+    },
+    "projectName": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!\\s)(?:.*\\S)$",
+      "description": "This string should match the project name, do not add trailing or leading whitespace, it might be used as identifier"
+    }
+  },
+  "required": ["projectType", "projectName"],
+  "patternProperties": {
+    "^(?!projectType$|projectName$|\\$schema$)[a-z][a-zA-Z0-9]*$": {
+      "type": "object",
+      "properties": {
+        "components": {
+          "$ref": "#/definitions/nestedObject"
+        },
+        "services": {
+          "$ref": "#/definitions/nestedObject"
+        },
+        "directives": {
+          "$ref": "#/definitions/nestedObject"
+        },
+        "pipes": {
+          "$ref": "#/definitions/nestedObject"
+        },
+        "resolvers": {
+          "$ref": "#/definitions/nestedObject"
+        },
+        "guards": {
+          "$ref": "#/definitions/nestedObject"
+        },
+        "stores": {
+          "$ref": "#/definitions/nestedObject"
+        },
+        "routes": {
+          "$ref": "#/definitions/nestedObject"
+        },
+        "pages": {
+          "$ref": "#/definitions/nestedObject"
+        },
+        "utils": {
+          "$ref": "#/definitions/nestedObject"
+        }
+      },
+      "minProperties": 1,
+      "additionalProperties": false
+    }
+  },
+  "minProperties": 3,
+  "maxProperties": 4,
+  "additionalProperties": false,
+  "definitions": {
+    "nestedObject": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z][a-zA-Z0-9]*$": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/nestedObject"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

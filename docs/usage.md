@@ -176,6 +176,53 @@ This is one example of a file structure:
 }
 ```
 
+#### Using the JSON Schema for validation
+
+The toolkit provides a JSON schema that you can reference in your translation files to get validation and autocompletion in your IDE. This helps prevent structural errors in your translation files.
+
+To use the schema, add a `$schema` property at the top of your translation file pointing to the schema:
+
+**For npm/node_modules installation:**
+
+```json
+{
+  "$schema": "./node_modules/@robmanganelly/ngx-translate-toolkit/src/translation-file.schema.json",
+  "projectType": "library",
+  "projectName": "shared-uis",
+  "sharedUis": {
+    "components": {
+      "confirmActions": {
+        "primaryButtonLabel": "Confirm"
+      }
+    }
+  }
+}
+```
+
+**For direct URL reference (when published):**
+
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/robmanganelly/ngx-translate-toolkit/main/projects/ngx-translate-toolkit/src/translation-file.schema.json",
+  "projectType": "library",
+  "projectName": "shared-uis",
+  "sharedUis": {
+    "components": {
+      "confirmActions": {
+        "primaryButtonLabel": "Confirm"
+      }
+    }
+  }
+}
+```
+
+The schema will validate:
+- Required properties (`projectType` and `projectName`)
+- The root project key in camelCase
+- Proper structure of type keys (components, services, directives, etc.)
+- CamelCase naming for all block keys and translation keys
+- No additional properties outside the expected structure
+
 ### Using helpers to generate translation keys
 
 #### Paths for a project

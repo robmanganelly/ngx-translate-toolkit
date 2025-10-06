@@ -17,4 +17,11 @@ Explore the full documentation on [GitHub Pages](https://robmanganelly.github.io
 - [API Reference](https://robmanganelly.github.io/ngx-translate-toolkit/api.html)
 - [Changelog](https://github.com/robmanganelly/ngx-translate-toolkit/releases)
 
+## Features
+
+- **Type-safe translation keys**: Define and use translation keys with TypeScript type safety
+- **Hierarchical organization**: Organize translations by project, type (components, services, etc.), and block
+- **Multi-loader support**: Load translation files from multiple sources
+- **JSON Schema validation**: Validate your translation files with the included JSON schema for IDE autocompletion and error detection
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
